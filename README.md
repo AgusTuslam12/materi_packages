@@ -4,6 +4,8 @@ flutter packages :
 1. curved_navigation_bar
 2. faker
 3. intl
+4. introduction_screen
+5. login_flutter (on progres)
 
 ## Getting Started
 
