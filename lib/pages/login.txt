@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_login/flutter_login.dart';
+
+const users = const {
+  'agus@gmail.com': '12345',
+  'hunter@gmail.com': 'hunter',
+};
+
+class Login extends StatelessWidget {
+  const Login({Key? key}) : super(key: key);
+  Duration get loginTime => Duration(milliseconds: 2000);
+
+  Future<String?>? _authUser(LoginData user) {
+    debugPrint('Name : ${user.name}, Password : ${user.password}');
+    return Future.delayed(loginTime).then((_) {
+      if (!users.containsKey(user.name)) {
+        return 'User not exists';
+      }
+      if (users[user.name] != user.password) {
+        return 'Password does not match';
+      }
+      return null;
+    });
+  }
+
+  Future<String?>? _recoverPassword(String name) {
+    debugPrint('Name : $name');
+    return Future.delayed(loginTime).then((_) {
+      if (!users.containsKey(name)) {
+        return 'User not exists';
+      }
+      return null;
+    });
+  }
+
+  Future<String?>? _singUpUser(SignupData singUp) {
+    debugPrint('SingnUp Name : ${singUp.name}, Password: ${singUp.password}');
+    return Future.delayed(loginTime).then((_) {
+      return null;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FlutterLogin(
+      title: 'Flutter',
+      logo: Image.network(
+          "https://ouch-cdn2.icons8.com/rkUAjQFGDSvjpbJEJ2U0eHrjU26wYHT036r_J5QPJ6g/rs:fit:256:225/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9wbmcvNDQy/L2FhZWZkYTM0LTE0/NGYtNDcwYy05YjJl/LTIzM2IzYjgxZDEx/Ni5wbmc.png"),
+      onLogin: _authUser,
+      onRecoverPassword: _recoverPassword,
+      onSignup: _singUpUser,
+      loginProviders: [
+        LoginProvider(
+            icon: Icons.facebook,
+            label: 'Facebook',
+            callback: () async {
+              debugPrint('start facebook sign in');
+              await Future.delayed(loginTime);
+              debugPrint('Stop facebook sign in');
+              return null;
+            }),
+      ],
+    );
+  }
+}
